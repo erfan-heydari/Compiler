@@ -5,7 +5,7 @@
  */
 package compiler;
  
-/*ajab*/
+
 import javax.swing.JFrame;
 
 /**
