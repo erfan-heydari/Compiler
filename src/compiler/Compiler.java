@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package compiler;
-
+ 
+/*ajab*/
 import javax.swing.JFrame;
 
 /**
