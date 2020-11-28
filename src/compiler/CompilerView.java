@@ -6,8 +6,15 @@
 package compiler;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 
 /**
  *
@@ -20,6 +27,12 @@ public class CompilerView extends javax.swing.JFrame {
      */
     public CompilerView() {
         initComponents();
+        jTextArea1.setBorder(BorderFactory.createCompoundBorder(
+                        jTextArea1.getBorder(), 
+                        BorderFactory.createEmptyBorder(15, 15, 15, 5)));
+        jTextArea2.setBorder(BorderFactory.createCompoundBorder(
+                        jTextArea1.getBorder(), 
+                        BorderFactory.createEmptyBorder(15, 15, 15, 5)));
     }
 
     /**
@@ -43,6 +56,7 @@ public class CompilerView extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(0, 0, 1348, 768));
@@ -51,12 +65,14 @@ public class CompilerView extends javax.swing.JFrame {
 
         jTextArea1.setBackground(new java.awt.Color(204, 204, 204));
         jTextArea1.setColumns(20);
+        jTextArea1.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
         jTextArea1.setRows(5);
         jTextArea1.setSelectionColor(new java.awt.Color(102, 102, 102));
         jScrollPane1.setViewportView(jTextArea1);
 
         jTextArea2.setBackground(new java.awt.Color(204, 204, 204));
         jTextArea2.setColumns(20);
+        jTextArea2.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
         jTextArea2.setRows(5);
         jTextArea2.setSelectionColor(new java.awt.Color(102, 102, 102));
         jScrollPane2.setViewportView(jTextArea2);
@@ -111,35 +127,49 @@ public class CompilerView extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compiler/icons8-code-100.png"))); // NOI18N
 
+        jButton5.setText("Write Table");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1)
-            .addComponent(jScrollPane2)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel3)
                 .addGap(0, 1111, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(120, 120, 120)
+                        .addGap(114, 114, 114)
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(366, 366, 366))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(349, 349, 349)))
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(26, 26, 26)
+                .addComponent(jButton5)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(162, 162, 162)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel4)
+                        .addGap(298, 298, 298)))
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(108, 108, 108))
+                .addGap(115, 115, 115))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -163,21 +193,24 @@ public class CompilerView extends javax.swing.JFrame {
                                 .addComponent(jLabel2))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel4)))))
+                                .addComponent(jLabel4))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(21, 21, 21)
+                        .addComponent(jButton5)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(29, 29, 29)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(44, 44, 44))
+                .addGap(22, 22, 22))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+       this.createTable();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -204,10 +237,20 @@ public class CompilerView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        
+        for (DataHelper operator : tokenTable) {
+            System.out.println(operator.getLexeme() + "   " + operator.getToken());
+            
+        }
+    
+    }//GEN-LAST:event_jButton5ActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -235,7 +278,8 @@ public class CompilerView extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new CompilerView().setVisible(true);
-            }
+                
+                            }
         });
     }
 
@@ -244,6 +288,7 @@ public class CompilerView extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -253,4 +298,187 @@ public class CompilerView extends javax.swing.JFrame {
     public static javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
+ String[] operators = {
+        "&B",
+        "&BM",
+        "&K",
+        "&KM",
+        "&MM",
+        "Jam",
+        "YekiBala",
+        "Kam",
+        "YekiPain",
+        "Zarb",
+        "Tagsim",
+        "Bagimonde",
+    };
+ 
+String[] operators2 = {
+      "(",
+      ")",
+      ",",
+      "\"",
+      "{",
+      "}",
+      "[",
+      "]",
+      "^",
+      "="
+    };
+
+    String[] keyWords = {
+        "Sahih",
+        "Ashari",
+        "Harf",
+        "Benevis",
+        "Begir",
+        "agar",
+        "ta",
+        
+    };
+    List<DataHelper> tokenTable = new ArrayList<DataHelper>();
+
+    private void createTable() {
+        byte[] code = jTextArea1.getText().getBytes();
+                
+        String temp = "";
+
+        for (int i = 0; i < code.length; i++) {
+            //recognize Identifier 
+            if (38 == code[i]) {
+                temp += (char)code[i];
+            }else{
+                 if ( 97 <= code[i] && code[i] <= 122 ) {
+                 temp += (char)code[i];
+            }else{
+                if ( 65 <= code[i] && code[i] <= 90) {
+                    temp += (char)code[i];
+                }else{
+                    
+                    if (temp.equals("")) {
+                      
+                            String lexeme = checkWordOperator2(""+(char)code[i],i,code);
+                            if (lexeme.equals("%d")) {
+                                tokenTable.add(new DataHelper(lexeme,"%d" ));
+                                System.out.println("lexeme is : operator for "+ lexeme);
+                                i++;
+                                
+                            }else if (lexeme.equals("Integer") || lexeme.equals("Double")){
+                                    i += needForward;
+                                    tokenTable.add(new DataHelper(lexeme,""+number));
+                                    System.out.println("lexeme is : "+lexeme+" for "+ number);
+                                
+                            }else{
+                                    tokenTable.add(new DataHelper(lexeme,""+(char)code[i] ));
+                                    System.out.println("lexeme is : "+lexeme+ "  for "+ (char)code[i]);
+                                }
+                            
+                    }else{
+                        if (code[i] <= 57 && code[i] >= 48) {
+                            temp += (char)code[i];
+                            continue;
+                        }
+                        //CheckWord
+                        String lexeme = checkWord(temp);
+                        tokenTable.add(new DataHelper(lexeme,""+temp ));
+                        System.out.println("lexeme is : "+lexeme+ "  for "+ temp);
+                        temp = "";
+                        i -= 1;
+                    }
+                }
+            }
+            }
+      
+            if (i == code.length-1 && !temp.equals("")) {
+                String lexeme = checkWord(temp);
+                System.out.println("lexeme is : "+lexeme);
+                temp = "";
+            }
+        }
+        
+        
+    }
+    
+   
+    
+    private String checkWord(String temp) {
+        
+        //Check Operators
+        for (int i = 0; i < operators.length ; i++) {
+            if (temp.equals(operators[i])) {
+                return "Operator";
+            }
+        }
+        
+        //Check keyword
+        for (int i = 0; i < keyWords.length ; i++) {
+            if (temp .equals(keyWords[i])) {
+                return "Keyword";
+            }
+        }
+        
+        try {
+             if (temp.getBytes()[0] == 38) {
+            return "Error";
+        }
+        } catch (Exception e) {
+            System.out.println("Error for " + temp);
+        }
+       
+//        System.out.println(temp.getBytes()[0]);
+        
+        return "identifier";
+        
+    }
+
+    int needForward = 0;
+    String number = "";
+    private String checkWordOperator2(String temp, int position, byte[] code) {
+        //Check Operators
+        for (int i = 0; i < operators2.length ; i++) {
+            if (temp.equals(operators2[i])) {
+                return "Operator";
+            }
+        }
+
+        if (temp.getBytes()[0] == 32) {
+            return "whiteSpace";
+        }
+        
+        if (position != code.length) {
+            if ((""+(char)code[position]+(char)code[position+1]).equals("%d")) {
+                return "%d";
+            }
+        }
+        
+        //check numbers
+        if (temp.getBytes()[0] <= 57 && temp.getBytes()[0] >= 48) {
+            boolean isInt = true;
+            needForward = 0; 
+            number = "";
+            for (int i = position + 1; i < code.length; i++) {
+                if (code[i] <= 57 && code[i] >= 48) {
+                    temp = temp + (char)code[i];
+                    needForward++;
+                }else if((char)code[i] == '.'){
+                    temp = temp + (char)code[i];
+                    needForward++;
+                    isInt = false;
+                }else{
+                    break;
+                }
+            }
+            number = temp;
+            
+            if (isInt) {
+                return "Integer";
+            }else{
+                return "Double";
+            }
+            
+        }
+        
+        return "Error";
+    }
+    
 }
