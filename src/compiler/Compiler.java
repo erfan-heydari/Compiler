@@ -18,6 +18,7 @@ public class Compiler {
      * @param args the command line arguments
      */
     static CompilerView cv;
+    static String DirectoryRootAddress;
     
     public static void main(String[] args) {
         
