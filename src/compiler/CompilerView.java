@@ -58,7 +58,6 @@ public class CompilerView extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(0, 0, 1348, 768));
@@ -136,13 +135,6 @@ public class CompilerView extends javax.swing.JFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compiler/icons8-code-100.png"))); // NOI18N
         jLabel4.setToolTipText("Sina#");
 
-        jButton5.setText("Write Table");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -158,14 +150,12 @@ public class CompilerView extends javax.swing.JFrame {
                         .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(26, 26, 26)
-                .addComponent(jButton5)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(162, 162, 162)
+                        .addGap(287, 287, 287)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(150, 150, 150)
+                        .addGap(275, 275, 275)
                         .addComponent(jLabel4)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -199,10 +189,7 @@ public class CompilerView extends javax.swing.JFrame {
                                 .addComponent(jLabel2))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel4))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jButton5)))
+                                .addComponent(jLabel4)))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
@@ -260,15 +247,6 @@ public class CompilerView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        
-        for (DataHelper operator : tokenTable) {
-            System.out.println(operator.getLexeme() + "   " + operator.getToken());
-        
-        }
-    
-    }//GEN-LAST:event_jButton5ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -311,7 +289,6 @@ public class CompilerView extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -362,146 +339,157 @@ String[] operators2 = {
     List<DataHelper> tokenTable = new ArrayList<DataHelper>();
 
     private void createTable() {
-        byte[] code = jTextArea1.getText().getBytes();
-                
+           
+        String Error = "";
+         
+        byte[] code = (jTextArea1.getText()+" ").toString().getBytes();
+        
+        boolean whiteSpaceORComment = false;
+        
+        boolean isInt = true;
+        
         String temp = "";
-
+        
+        int state = 0;
+        
         for (int i = 0; i < code.length; i++) {
-            //recognize Identifier 
-            if (38 == code[i]) {
-                temp += (char)code[i];
-            }else{
-                 if ( 97 <= code[i] && code[i] <= 122 ) {
-                 temp += (char)code[i];
-            }else{
-                if ( 65 <= code[i] && code[i] <= 90) {
-                    temp += (char)code[i];
-                }else{
-                    
-                    if (temp.equals("")) {
+            
+            switch(state){
+              case 0:
+                  
+                  if(whiteSpaceORComment){
+                      //do nothing
+                      break;
+                  }
+                  
+                  //Syntax starts with &
+                  if(code[i] == 38){
+                      temp += (char)code[i];
+                      state = 1;
+                      break;
+                  }
+
+                  //identifier & keyWords
+                  if (97 <= code[i] && code[i] <= 122) {
+                      temp += (char)code[i];
+                      state = 2;
+                      break;
+                  }
+                  if ((65 <= code[i] && code[i] <= 90)) {
+                      temp += (char)code[i];
+                      state = 2;
+                      break;
+                  }
+                  
+                  //operator ( ) ^ . . .
+                  for (int j = 0; j < operators2.length; j++) {
+                      if (String.valueOf(((char) code[i])).equals(operators2[j])) {
+                          state = 3;
+                          temp = operators2[j];
+                      }
+                  }
+
+                  //numbers
+                  if(code[i] <= 57 && code[i] >= 48){
+                      temp += (char)code[i];
+                      state = 4;
+                      break;
+                  }
+                  
+                  break;
+              case 1:
+                  // operator Starts with &
+                  if( 65 <= code[i] && code[i] <= 90){
+                      temp += (char)code[i];
+                  }else{
+                      int flag = 0;
+                      for (int j = 0; j < operators.length; j++) {
+                          if (temp.equals(operators[j])) {
+                            tokenTable.add(new DataHelper("operator",""+temp ));
+                            temp = ""; state = 0; i--;
+                            flag = 1;
+                            break;
+                          }
+                      }
+                      if (flag == 1 ) break;
+                      else state = 99;
                       
-                            String lexeme = checkWordOperator2(""+(char)code[i],i,code);
-                            if (lexeme.equals("%d")) {
-                                tokenTable.add(new DataHelper(lexeme,"%d" ));
-                                System.out.println("lexeme is : operator for "+ lexeme);
-                                i++;
-                                
-                            }else if (lexeme.equals("Integer") || lexeme.equals("Double")){
-                                    i += needForward;
-                                    tokenTable.add(new DataHelper(lexeme,""+number));
-                                    System.out.println("lexeme is : "+lexeme+" for "+ number);
-                                
-                            }else{
-                                    tokenTable.add(new DataHelper(lexeme,""+(char)code[i] ));
-                                    System.out.println("lexeme is : "+lexeme+ "  for "+ (char)code[i]);
-                                }
-                            
-                    }else{
-                        if (code[i] <= 57 && code[i] >= 48) {
-                            temp += (char)code[i];
-                            continue;
+                  }
+                  break;
+              case 2:
+                  if ((97 <= code[i] && code[i] <= 122)||65 <= code[i] && code[i] <= 90) {
+                      temp += (char)code[i];
+                      break;
+                  }else if(code[i] <= 57 && code[i] >= 48){
+                      temp += (char)code[i];
+                  }else{
+                      //save
+                      for (int j = 0; j < operators.length; j++) {
+                          if (temp.equals(operators[j])) {
+                              tokenTable.add(new DataHelper("operators",""+temp ));
+                              temp = ""; state = 0; i--;
+                              break;
+                          }
+                      }
+                      for (int j = 0; j < keyWords.length; j++) {
+                          if (temp.equals(keyWords[j])) {
+                              tokenTable.add(new DataHelper("keyWords",""+temp ));
+                              temp = ""; state = 0; i--;
+                              break;
+                          }
+                      }
+                      if (!temp.equals("")) {
+                          tokenTable.add(new DataHelper("identifier",""+temp ));
+                          temp = ""; state = 0; i--;
+                      }
+                  }
+
+                  break;
+                case 3:
+                  tokenTable.add(new DataHelper("operators",""+temp ));
+                  temp = "";
+                  state = 0;
+                  i--;
+                  break;
+                case 4:
+                  
+                    if (code[i] <= 57 && code[i] >= 48) {
+                        temp = temp + (char)code[i];
+                    }else if((char)code[i] == '.'){
+                        temp = temp + (char)code[i];
+                        isInt = false;
+                    }else {
+                        if (isInt) {
+                            tokenTable.add(new DataHelper("Integer",""+temp ));
+                            temp = ""; state = 0; i--;
+                        }else{
+                            try {
+                                double d = Double.parseDouble(temp);
+                                tokenTable.add(new DataHelper("Double",""+temp ));
+                                temp = ""; state = 0; i--; isInt = true;
+                            } catch (Exception e) {
+                                i--;
+                                Error = e.toString();
+                                state = 99;  
+                            }
                         }
-                        //CheckWord
-                        String lexeme = checkWord(temp);
-                        tokenTable.add(new DataHelper(lexeme,""+temp ));
-                        System.out.println("lexeme is : "+lexeme+ "  for "+ temp);
-                        temp = "";
-                        i -= 1;
                     }
-                }
-            }
-            }
-      
-            if (i == code.length-1 && !temp.equals("")) {
-                String lexeme = checkWord(temp);
-                System.out.println("lexeme is : "+lexeme);
-                temp = "";
-            }
-        }
-        
-        
-    }
-    
-   
-    
-    private String checkWord(String temp) {
-        
-        //Check Operators
-        for (int i = 0; i < operators.length ; i++) {
-            if (temp.equals(operators[i])) {
-                return "Operator";
-            }
-        }
-        
-        //Check keyword
-        for (int i = 0; i < keyWords.length ; i++) {
-            if (temp .equals(keyWords[i])) {
-                return "Keyword";
-            }
-        }
-        
-        try {
-             if (temp.getBytes()[0] == 38) {
-            return "Error";
-        }
-        } catch (Exception e) {
-            System.out.println("Error for " + temp);
-        }
-       
-//        System.out.println(temp.getBytes()[0]);
-        
-        return "identifier";
-        
-    }
-
-    int needForward = 0;
-    String number = "";
-    private String checkWordOperator2(String temp, int position, byte[] code) {
-        //Check Operators
-        for (int i = 0; i < operators2.length ; i++) {
-            if (temp.equals(operators2[i])) {
-                return "Operator";
-            }
-        }
-
-        if (temp.getBytes()[0] == 32) {
-            return "whiteSpace";
-        }
-        
-        if (position != code.length) {
-            if ((""+(char)code[position]+(char)code[position+1]).equals("%d")) {
-                return "%d";
-            }
-        }
-        
-        //check numbers
-        if (temp.getBytes()[0] <= 57 && temp.getBytes()[0] >= 48) {
-            boolean isInt = true;
-            needForward = 0; 
-            number = "";
-            for (int i = position + 1; i < code.length; i++) {
-                if (code[i] <= 57 && code[i] >= 48) {
-                    temp = temp + (char)code[i];
-                    needForward++;
-                }else if((char)code[i] == '.'){
-                    temp = temp + (char)code[i];
-                    needForward++;
-                    isInt = false;
-                }else{
+                  break;
+                case 99:
+                    System.err.println("Error! At "+ temp + "\n"+Error);
+                    i = code.length;
                     break;
-                }
-            }
-            number = temp;
-            
-            if (isInt) {
-                return "Integer";
-            }else{
-                return "Double";
-            }
-            
+              default:
+                  state = 99;
+                  break;
+            };
         }
-        
-        return "Error";
+        String OutPut = "";
+         for (DataHelper operator : tokenTable)
+         {
+             OutPut += operator.getLexeme() + "   " + operator.getToken() + "\n";
+         }
+         jTextArea2.setText(OutPut);
     }
     
 }
