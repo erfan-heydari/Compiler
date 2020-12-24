@@ -204,6 +204,29 @@ public class CompilerView extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
        this.createTable();
+       //F5 Hotkey
+       /*
+       JButton button = new JButton();
+ 
+    Action buttonAction = new AbstractAction("Refresh") {
+ 
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        System.out.println("Refreshing...");
+    }
+    };
+ 
+    String key = "Referesh";
+ 
+    button.setAction(buttonAction);
+ 
+    buttonAction.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_R);
+ 
+    button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
+        KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0), key);
+ 
+    button.getActionMap().put(key, buttonAction);
+       */
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -219,7 +242,7 @@ public class CompilerView extends javax.swing.JFrame {
             Logger.getLogger(CompilerView.class.getName()).log(Level.SEVERE, null, ex);
         }
         /*
-        //CTRL + S Hotckey
+        //CTRL + S Hotkey
         JMenuItem menuItemSave = new JMenuItem();
  
     Action saveAction = new AbstractAction("Save") {
