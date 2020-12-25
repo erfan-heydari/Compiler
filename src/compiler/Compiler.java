@@ -6,6 +6,7 @@
 package compiler;
  
 //hi
+import java.awt.Color;
 import javax.swing.JFrame;
 
 /**
@@ -23,6 +24,7 @@ public class Compiler {
     public static void main(String[] args) {
         
         cv = new CompilerView();
+        cv.getContentPane().setBackground(Color.DARK_GRAY);
         cv.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         cv.setLocationRelativeTo(null);
         cv.setVisible(true);

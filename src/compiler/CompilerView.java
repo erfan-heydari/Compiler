@@ -64,14 +64,14 @@ public class CompilerView extends javax.swing.JFrame {
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
 
-        jTextArea1.setBackground(new java.awt.Color(240, 240, 240));
+        jTextArea1.setBackground(new java.awt.Color(153, 153, 153));
         jTextArea1.setColumns(20);
         jTextArea1.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
         jTextArea1.setRows(5);
         jTextArea1.setSelectionColor(new java.awt.Color(102, 102, 102));
         jScrollPane1.setViewportView(jTextArea1);
 
-        jTextArea2.setBackground(new java.awt.Color(240, 240, 240));
+        jTextArea2.setBackground(new java.awt.Color(153, 153, 153));
         jTextArea2.setColumns(20);
         jTextArea2.setFont(new java.awt.Font("Monospaced", 0, 18)); // NOI18N
         jTextArea2.setRows(5);
@@ -90,7 +90,7 @@ public class CompilerView extends javax.swing.JFrame {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compiler/icons8-output-50.png"))); // NOI18N
         jLabel3.setToolTipText("Output");
 
-        jButton1.setBackground(new java.awt.Color(255, 255, 255));
+        jButton1.setBackground(new java.awt.Color(102, 102, 102));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compiler/icons8-resume-button-60.png"))); // NOI18N
         jButton1.setToolTipText("Run(F5)");
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -100,7 +100,7 @@ public class CompilerView extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setBackground(new java.awt.Color(255, 255, 255));
+        jButton2.setBackground(new java.awt.Color(102, 102, 102));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compiler/icons8-multiply-60.png"))); // NOI18N
         jButton2.setToolTipText("Close\n");
         jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -110,7 +110,7 @@ public class CompilerView extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setBackground(new java.awt.Color(255, 255, 255));
+        jButton3.setBackground(new java.awt.Color(102, 102, 102));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compiler/icons8-save-50.png"))); // NOI18N
         jButton3.setToolTipText("Save(Ctrl + S)");
         jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -120,7 +120,7 @@ public class CompilerView extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setBackground(new java.awt.Color(255, 255, 255));
+        jButton4.setBackground(new java.awt.Color(102, 102, 102));
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compiler/icons8-open-in-popup-50 (1).png"))); // NOI18N
         jButton4.setToolTipText("Open(Ctrl + O)");
         jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -163,9 +163,7 @@ public class CompilerView extends javax.swing.JFrame {
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(115, 115, 115))
             .addComponent(jScrollPane1)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane2)
-                .addContainerGap())
+            .addComponent(jScrollPane2)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,11 +190,10 @@ public class CompilerView extends javax.swing.JFrame {
                                 .addComponent(jLabel4)))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(jLabel3)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -266,6 +263,22 @@ public class CompilerView extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(CompilerView.class.getName()).log(Level.SEVERE, null, ex);
         }
+        /*
+        //CTRL + O Hotkey
+        JMenuItem menuItemSave = new JMenuItem();
+ 
+    Action openAction = new AbstractAction("Open") {
+ 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        System.out.println("Opening...");
+    }
+    };
+ 
+    saveAction.putValue(Action.ACCELERATOR_KEY,
+        KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
+ 
+    menuItemSave.setAction(openAction);*/
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
