@@ -200,7 +200,8 @@ public class CompilerView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       this.createTable();
+        tokenTable.clear();
+        this.createTable();
        //F5 Hotkey
        /*
        JButton button = new JButton();
@@ -224,11 +225,18 @@ public class CompilerView extends javax.swing.JFrame {
  
     button.getActionMap().put(key, buttonAction);
        */
+        tokenTable.add(new DataHelper("end", "$"));
+        Parser parser=new Parser(tokenTable);//i*i+(i+i)$
+        parser.startParsing();
+  
+       
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // closin':
+        
         this.setVisible(false);
+        System.exit(1);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -339,14 +347,15 @@ public class CompilerView extends javax.swing.JFrame {
         "&KM",
         "&MM",
         "Jam",
-        "YekiBala",
         "Kam",
-        "YekiPain",
         "Zarb",
         "Tagsim",
         "Bagimonde",
     };
- 
+ String[] operator3 = {
+        "YekiBala",
+        "YekiPain",
+ };
 String[] operators2 = {
       "(",
       ")",
@@ -357,7 +366,7 @@ String[] operators2 = {
       "[",
       "]",
       "^",
-      "="
+      "=",
     };
 
     String[] keyWords = {
@@ -421,6 +430,15 @@ String[] operators2 = {
                           state = 3;
                           temp = operators2[j];
                       }
+                      
+//                      if (i != code.length-1) {
+////                          System.err.println((String.valueOf(((char) code[i]))+String.valueOf(((char) code[++i]))));
+//                          if ((String.valueOf(((char) code[i]))+String.valueOf(((char) code[i+1]))).equals(operators2[j])) {
+//                          state = 3;
+//                          temp = operators2[j];
+//                        }
+//                      }
+//                      
                   }
 
                   //numbers
@@ -439,7 +457,15 @@ String[] operators2 = {
                       int flag = 0;
                       for (int j = 0; j < operators.length; j++) {
                           if (temp.equals(operators[j])) {
-                            tokenTable.add(new DataHelper("operator",""+temp ));
+                            tokenTable.add(new DataHelper("OperatorM",""+temp ));
+                            temp = ""; state = 0; i--;
+                            flag = 1;
+                            break;
+                          }
+                      }
+                      for (int j = 0; j < operator3.length; j++) {
+                          if (temp.equals(operator3[j])) {
+                            tokenTable.add(new DataHelper("Operator3",""+temp ));
                             temp = ""; state = 0; i--;
                             flag = 1;
                             break;
@@ -460,9 +486,16 @@ String[] operators2 = {
                       //save
                       for (int j = 0; j < operators.length; j++) {
                           if (temp.equals(operators[j])) {
-                              tokenTable.add(new DataHelper("operators",""+temp ));
+                              tokenTable.add(new DataHelper("OperatorM",""+temp ));
                               temp = ""; state = 0; i--;
                               break;
+                          }
+                      }
+                      for (int j = 0; j < operator3.length; j++) {
+                          if (temp.equals(operator3[j])) {
+                            tokenTable.add(new DataHelper("Operator3",""+temp ));
+                            temp = ""; state = 0; i--;
+                            break;
                           }
                       }
                       for (int j = 0; j < keyWords.length; j++) {
@@ -480,10 +513,22 @@ String[] operators2 = {
 
                   break;
                 case 3:
-                  tokenTable.add(new DataHelper("operators",""+temp ));
-                  temp = "";
-                  state = 0;
-                  i--;
+                  tokenTable.add(new DataHelper("Operator",""+temp ));
+                  
+//                  if(!temp.equals("%d"))
+//                     i--;
+
+                  if(temp.equals("\"")){
+                      state = 5;
+                      i--;
+                      temp = "";
+                  }else{
+                      i--;
+                      temp = "";
+                      state = 0;
+                  }
+                  
+                  
                   break;
                 case 4:
                   
@@ -509,6 +554,24 @@ String[] operators2 = {
                         }
                     }
                   break;
+                case 5:
+                    
+                    if((char)code[i] != '"')
+                    {
+                        temp += (char)code[i];
+                        state = 5;
+                        
+                    }else{
+                        //save String
+                        
+                        tokenTable.add(new DataHelper("String",""+temp ));
+                        tokenTable.add(new DataHelper("Operator","\""));
+
+                        temp = "";
+                        state = 0;
+                        
+                    }
+                    break;
                 case 99:
                     System.err.println("Error! At "+ temp + "\n"+Error);
                     i = code.length;
