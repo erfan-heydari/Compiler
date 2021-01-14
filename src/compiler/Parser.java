@@ -5,6 +5,7 @@ Ahmad Abdel Naser
  */
 package compiler;
 
+import static compiler.CompilerView.jTextArea1;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -140,6 +141,9 @@ public void startParsing()
     if(token.equals("$"))
         {
          System.out.println("Input is Accepted by LL1");   
+         //start change to C
+            CChanger change = new CChanger(this.input);
+            change.changer();
         }
     else
     {
