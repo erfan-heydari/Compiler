@@ -105,7 +105,7 @@ public class CompilerView extends javax.swing.JFrame {
         jButton1.setMnemonic('R');
         jButton1.setBackground(new java.awt.Color(102, 102, 102));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compiler/icons8-resume-button-60.png"))); // NOI18N
-        jButton1.setToolTipText("Run(F5)");
+        jButton1.setToolTipText("Run(Alt + R)\n");
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         //Action saveAction = new AbstractAction("Save") {
             //
@@ -127,7 +127,7 @@ public class CompilerView extends javax.swing.JFrame {
         jButton2.setMnemonic('C');
         jButton2.setBackground(new java.awt.Color(102, 102, 102));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compiler/icons8-multiply-60.png"))); // NOI18N
-        jButton2.setToolTipText("Close\n");
+        jButton2.setToolTipText("Close(Alt + C)\n\n");
         jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,7 +138,7 @@ public class CompilerView extends javax.swing.JFrame {
         jButton3.setMnemonic('S');
         jButton3.setBackground(new java.awt.Color(102, 102, 102));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compiler/icons8-save-50.png"))); // NOI18N
-        jButton3.setToolTipText("Save(Ctrl + S)");
+        jButton3.setToolTipText("Save(Alt + S)\n");
         jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -149,7 +149,7 @@ public class CompilerView extends javax.swing.JFrame {
         jButton4.setMnemonic('O');
         jButton4.setBackground(new java.awt.Color(102, 102, 102));
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compiler/icons8-open-in-popup-50 (1).png"))); // NOI18N
-        jButton4.setToolTipText("Open(Ctrl + O)");
+        jButton4.setToolTipText("Open(Alt + O)\n");
         jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
