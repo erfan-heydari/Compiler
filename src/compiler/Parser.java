@@ -5,22 +5,25 @@ Ahmad Abdel Naser
  */
 package compiler;
 
+import static compiler.CompilerView.jEditorPane2;
 import static compiler.CompilerView.jTextArea1;
+import java.awt.Color;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
 
 public class Parser {
+    
 //input
    public List<DataHelper> input;//"i*i$"
     private int indexOfInput=-1;
     //Stack
     Stack <String> strack=new Stack<String>();
     //Table of rules
-    String [][] table=
+    String [][] table =
     {
-/* S */ {null,"D ^ S ",null,"D ^ S ","D ^ S ",null,null,null,"tohi ","[ S ] ",null,null,null,null,null,null,null,null,null, "agar C " ,"ta C ","Begir B ","Benevis B ","Harf I ","Ashari A ","Sahih A "}
+/* S */ {null,"D ^ S ",null,"D ^ S ","identifier E ",null,null,null,"tohi ","[ S ] ",null,null,null,null,null,null,null,null,null, "agar C " ,"ta C ","Begir B ","Benevis B ","Harf I ","Ashari A ","Sahih A "}
             ,
 /* A */ {null,null,null,null,"identifier E ",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null}
             ,
@@ -48,11 +51,11 @@ public class Parser {
             ,
 /* Z */ {null,null,null,null,null,null,null,null,null,"[ S ] ",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null}
             ,
-/* I */ {null,null,null,"identifier J ",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null}
+/* I */ {null,null,null,null,"identifier J ",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null}
             ,
 /* J */ {null,null,null,null,null,null,"= K ",", I ",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null}
             ,
-/* K */ {null,"' Character ' ^ ",null,null,"identifier ^ ",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null}
+/* K */ {null,"' Character ' ^ S ",null,null,"identifier ^ S",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null}
             ,
 /* P */ {null,"' Character ' ",null,"number ","identifier ",null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null}
 
@@ -65,7 +68,7 @@ public class Parser {
         "H","Z","I",
         "J","K","P"};
     String [] terminals={
-        "$","'","character","number","identifier","^",
+        "$","'","Character","number","identifier","^",
         "=",",","]","[","epsilon",
         "OperatorM","}","{",")","\"",
         "String","(","Operator3","agar",
@@ -73,6 +76,7 @@ public class Parser {
         "Sahih"
         };
 
+    public String outPut = "";
 
 public Parser(List<DataHelper> in)
 {
@@ -89,6 +93,8 @@ for(int i=rules.length-1;i>=0;i--)
 push(rules[i]);
 }
 }
+
+
 
 public void startParsing()
 {
@@ -120,8 +126,9 @@ public void startParsing()
             }   
             else
             {
-                System.out.println("Matching: Terminal :( "+token+" )");
-                System.out.println(indexOfInput);
+                outPut += "Matching: Terminal :( "+token+" ) <br>";
+//                System.out.println("Matching: Terminal :( "+token+" )");
+//                System.out.println(indexOfInput);
                 token = read();
             }   
         }
@@ -140,14 +147,19 @@ public void startParsing()
     //accept
     if(token.equals("$"))
         {
-         System.out.println("Input is Accepted by LL1");   
-         //start change to C
+          //System.out.println("Input is Accepted by LL1");   
+            CompilerView.jEditorPane2.setText("<font size = \"5\" color=\"black\">"+outPut + "</font><html><font size = \"6\" color=\"green\">********  Input is Accepted by LL1  ********</font></html>");
+          
+          //start change to C
             CChanger change = new CChanger(this.input);
             change.changer();
         }
     else
     {
-     System.out.println("Input is not Accepted by LL1");   
+         outPut += "********  Input is not Accepted by LL1  ********";            
+         CompilerView.jEditorPane2.setText(outPut);
+         CompilerView.jEditorPane2.setForeground(Color.red);
+
     }
 }
 
@@ -179,7 +191,8 @@ public void startParsing()
         indexOfInput++;
         String str = "";
     if(this.input.get(indexOfInput).getLexeme().equals("identifier") || this.input.get(indexOfInput).getLexeme().equals("OperatorM") 
-            || this.input.get(indexOfInput).getLexeme().equals("Operator3")||this.input.get(indexOfInput).getLexeme().equals("String")){
+            || this.input.get(indexOfInput).getLexeme().equals("Operator3")||this.input.get(indexOfInput).getLexeme().equals("String")
+            || this.input.get(indexOfInput).getLexeme().equals("Character")){
         str = this.input.get(indexOfInput).getLexeme();
     }else if(this.input.get(indexOfInput).getLexeme().equals("Integer")||this.input.get(indexOfInput).getLexeme().equals("Double")){
         str = "number";
@@ -199,7 +212,7 @@ public void startParsing()
     }
 
     private void error(String message) {
-        System.out.println(message);
+          CompilerView.jEditorPane2.setText("<font size = \"5\" color=\"black\">"+outPut+"</font><br>"+"<font size = \"5\" color=\"red\">"+message+"</font>");
         throw new RuntimeException(message);
     }
     public String getRule(String non,String term)
@@ -211,7 +224,7 @@ public void startParsing()
     if(rule==null)
     {
         System.out.println(strack);
-    error("There is no Rule by this , Non-Terminal("+non+") ,Terminal("+term+") ");
+        error("There is no Rule by this , Non-Terminal("+non+") ,Terminal("+term+") ");
     }
     return rule;
     }
@@ -240,16 +253,6 @@ public void startParsing()
        return -1;
     }
     
-        //main
-//    public static void main(String[] args) {
-//        // TODO code application logic here
-//        
-//        LL1_Parser parser=new LL1_Parser("Sahih");//i*i+(i+i)$
-//        parser.algorithm();
-//  
-//    }
+      
 
 }
-/*
- 
- */

@@ -115,7 +115,6 @@ public class CChanger {
             System.out.println("An error occurred.");
             e.printStackTrace();
           }
-         
         runCode();
     }
     public void runCode(){
@@ -127,6 +126,4 @@ public class CChanger {
             Logger.getLogger(CChanger.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
 }

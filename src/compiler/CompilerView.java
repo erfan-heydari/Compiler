@@ -5,6 +5,7 @@
  */
 package compiler;
 
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,8 +16,11 @@ import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.BorderFactory;
 import javax.swing.KeyStroke;
+import javax.swing.text.html.HTMLEditorKit;
 
 /**
  *
@@ -33,6 +37,9 @@ public class CompilerView extends javax.swing.JFrame {
                         jTextArea1.getBorder(), 
                         BorderFactory.createEmptyBorder(15, 15, 15, 5)));
         jTextArea2.setBorder(BorderFactory.createCompoundBorder(
+                        jTextArea1.getBorder(), 
+                        BorderFactory.createEmptyBorder(15, 15, 15, 5)));
+        jEditorPane2.setBorder(BorderFactory.createCompoundBorder(
                         jTextArea1.getBorder(), 
                         BorderFactory.createEmptyBorder(15, 15, 15, 5)));
     }
@@ -58,6 +65,10 @@ public class CompilerView extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        jEditorPane2 = new javax.swing.JEditorPane();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(0, 0, 1348, 768));
@@ -79,6 +90,7 @@ public class CompilerView extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTextArea2);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setText("Compiler");
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -93,8 +105,19 @@ public class CompilerView extends javax.swing.JFrame {
         jButton1.setMnemonic('R');
         jButton1.setBackground(new java.awt.Color(102, 102, 102));
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compiler/icons8-resume-button-60.png"))); // NOI18N
-        jButton1.setToolTipText("Run(Alt + R)");
+        jButton1.setToolTipText("Run(F5)");
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        //Action saveAction = new AbstractAction("Save") {
+            //
+            //    @Override
+            //    public void actionPerformed(ActionEvent e) {
+                //        System.out.println("Saving...");
+                //    }
+            //    };
+        //
+        //    saveAction.putValue(Action.ACCELERATOR_KEY,
+            //        KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK));
+        //jButton1.setAction(saveAction);
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -104,7 +127,7 @@ public class CompilerView extends javax.swing.JFrame {
         jButton2.setMnemonic('C');
         jButton2.setBackground(new java.awt.Color(102, 102, 102));
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compiler/icons8-multiply-60.png"))); // NOI18N
-        jButton2.setToolTipText("Close (Alt + C)\n");
+        jButton2.setToolTipText("Close\n");
         jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -115,7 +138,7 @@ public class CompilerView extends javax.swing.JFrame {
         jButton3.setMnemonic('S');
         jButton3.setBackground(new java.awt.Color(102, 102, 102));
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compiler/icons8-save-50.png"))); // NOI18N
-        jButton3.setToolTipText("Save(Alt + S)");
+        jButton3.setToolTipText("Save(Ctrl + S)");
         jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,7 +149,7 @@ public class CompilerView extends javax.swing.JFrame {
         jButton4.setMnemonic('O');
         jButton4.setBackground(new java.awt.Color(102, 102, 102));
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compiler/icons8-open-in-popup-50 (1).png"))); // NOI18N
-        jButton4.setToolTipText("Open(Alt + O)");
+        jButton4.setToolTipText("Open(Ctrl + O)");
         jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -139,13 +162,22 @@ public class CompilerView extends javax.swing.JFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/compiler/icons8-code-100.png"))); // NOI18N
         jLabel4.setToolTipText("Sina#");
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel5.setText("Lexer Output");
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel6.setText("Parser Output");
+
+        jEditorPane2.setBackground(new java.awt.Color(153, 153, 153));
+        jEditorPane2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jScrollPane5.setViewportView(jEditorPane2);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addGap(0, 1111, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
@@ -158,17 +190,31 @@ public class CompilerView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(287, 287, 287)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 310, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 309, Short.MAX_VALUE)
+                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(115, 115, 115))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(275, 275, 275)
                         .addComponent(jLabel4)
-                        .addGap(288, 288, 288)))
-                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(115, 115, 115))
-            .addComponent(jScrollPane1)
-            .addComponent(jScrollPane2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel3)
+                .addGap(170, 170, 170)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel6)
+                .addGap(242, 242, 242))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(47, 47, 47)
+                        .addComponent(jScrollPane5))
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -194,46 +240,38 @@ public class CompilerView extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel4)))))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                .addComponent(jLabel3)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 289, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(23, 23, 23))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel6)
+                        .addComponent(jLabel5)))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                    .addComponent(jScrollPane5))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    public static boolean isLexemOK = true;
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        isLexemOK = true;
+        jEditorPane2.setEditorKit(new HTMLEditorKit());
         tokenTable.clear();
         this.createTable();
-       //F5 Hotkey
-       /*
-       JButton button = new JButton();
- 
-    Action buttonAction = new AbstractAction("Refresh") {
- 
-    @Override
-    public void actionPerformed(ActionEvent evt) {
-        System.out.println("Refreshing...");
-    }
-    };
- 
-    String key = "Referesh";
- 
-    button.setAction(buttonAction);
- 
-    buttonAction.putValue(Action.MNEMONIC_KEY, KeyEvent.VK_R);
- 
-    button.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(
-        KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0), key);
- 
-    button.getActionMap().put(key, buttonAction);
-       */
-        tokenTable.add(new DataHelper("end", "$"));
-        Parser parser=new Parser(tokenTable);//i*i+(i+i)$
-        parser.startParsing();
+    
+        
+        
+        if(isLexemOK){
+            tokenTable.add(new DataHelper("end", "$"));
+            Parser parser=new Parser(tokenTable);//i*i+(i+i)$
+            parser.startParsing();
+        }
+       
   
        
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -252,22 +290,7 @@ public class CompilerView extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(CompilerView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        /*
-        //CTRL + S Hotkey
-        JMenuItem menuItemSave = new JMenuItem();
- 
-    Action saveAction = new AbstractAction("Save") {
- 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        System.out.println("Saving...");
-    }
-    };
- 
-    saveAction.putValue(Action.ACCELERATOR_KEY,
-        KeyStroke.getKeyStroke(KeyEvent.VK_S, KeyEvent.CTRL_DOWN_MASK));
- 
-    menuItemSave.setAction(saveAction);*/
+      
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -277,22 +300,7 @@ public class CompilerView extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(CompilerView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        /*
-        //CTRL + O Hotkey
-        JMenuItem menuItemSave = new JMenuItem();
- 
-    Action openAction = new AbstractAction("Open") {
- 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        System.out.println("Opening...");
-    }
-    };
- 
-    saveAction.putValue(Action.ACCELERATOR_KEY,
-        KeyStroke.getKeyStroke(KeyEvent.VK_O, KeyEvent.CTRL_DOWN_MASK));
- 
-    menuItemSave.setAction(openAction);*/
+       
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
@@ -326,23 +334,28 @@ public class CompilerView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
+      
+
                 new CompilerView().setVisible(true);
-                
                             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    public static javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    public static javax.swing.JEditorPane jEditorPane2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane5;
     public static javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextArea jTextArea2;
     // End of variables declaration//GEN-END:variables
@@ -367,6 +380,7 @@ String[] operators2 = {
       ")",
       ",",
       "\"",
+      "'",
       "{",
       "}",
       "[",
@@ -454,6 +468,15 @@ String[] operators2 = {
                       break;
                   }
                   
+//                  if(temp.equals("'")){
+//                      System.out.println("yes");
+//                      state = 6;
+//                      i--;
+//                      temp = "";
+//                  }else{
+//                      temp = "";
+//                  }
+//                  
                   break;
               case 1:
                   // operator Starts with &
@@ -528,7 +551,12 @@ String[] operators2 = {
                       state = 5;
                       i--;
                       temp = "";
-                  }else{
+                  }else if(temp.equals("'")){
+                      state = 6;
+                      i--;
+                      temp = "";
+                  }
+                  else{
                       i--;
                       temp = "";
                       state = 0;
@@ -577,10 +605,35 @@ String[] operators2 = {
                         state = 0;
                         
                     }
+                    
+                    break;
+                case 6:
+                   if((char)code[i] != '\'')
+                    {
+                        temp += (char)code[i];
+                        state = 6;
+                        
+                    }else{
+                        //save Char
+                        
+                        tokenTable.add(new DataHelper("Character",""+temp ));
+                        tokenTable.add(new DataHelper("Operator","'"));
+
+                        temp = "";
+                        state = 0;
+                        
+                    } 
+                    
                     break;
                 case 99:
-                    System.err.println("Error! At "+ temp + "\n"+Error);
+                    
+                    String error = "********  LEXER Error ********\n" + "Error! At "+ temp +Error;
+                    System.err.println(error);
+                    jTextArea2.setText(error);
+                    
+                    
                     i = code.length;
+                    isLexemOK = false;
                     break;
               default:
                   state = 99;
@@ -592,7 +645,9 @@ String[] operators2 = {
          {
              OutPut += operator.getLexeme() + "   " + operator.getToken() + "\n";
          }
-         jTextArea2.setText(OutPut);
+         if (isLexemOK) {
+             jTextArea2.setText(OutPut);
+        }
     }
     
 }

@@ -28,10 +28,11 @@ public class Filechooser
                             File ss = new File(Compiler.DirectoryRootAddress);
                             
                             BufferedReader br = new BufferedReader(new FileReader(ss)); 
-
+                            String text = "";
                             String st; 
-                            while ((st = br.readLine()) != null) 
-                                CompilerView.jTextArea1.setText(st);
+                            while ((st = br.readLine()) != null)
+                                text += st + "\n";
+                                CompilerView.jTextArea1.setText(text);
                             System.out.println(jfc.getSelectedFile().getPath());
                             return (jfc.getSelectedFile().getPath());
 		}

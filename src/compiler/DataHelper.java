@@ -9,6 +9,7 @@ package compiler;
  *
  * @author Batiss
  */
+
 class DataHelper{
   String Lexeme;
   String Token;
